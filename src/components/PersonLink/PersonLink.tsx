@@ -47,7 +47,7 @@ export const PersonLink: React.FC<Props> = ({ person, people }) => {
           <Link
             to={`/people/${motherSlug}`}
             className={cn({
-              'has-text-danger': motherSlug,
+              'has-text-danger': person.motherName,
             })}
           >
             {person.motherName}

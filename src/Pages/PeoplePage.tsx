@@ -4,7 +4,7 @@ import { Loader } from '../components/Loader';
 import { useEffect, useState, useCallback } from 'react';
 import { Person } from '../types/Person';
 import { getPeople } from '../utils/fetchClient';
-import { PersonLink } from '../components/ParentCell/PersonLink';
+import { PersonLink } from '../components/PersonLink/PersonLink';
 
 // #endregion
 
