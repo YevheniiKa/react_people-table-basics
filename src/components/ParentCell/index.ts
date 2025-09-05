@@ -1,1 +1,1 @@
-export * from './ParentCell';
+export * from './PersonLink';

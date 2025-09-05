@@ -1,21 +1,17 @@
 // #region Import
 
-import cn from 'classnames';
-import { Link, useParams } from 'react-router-dom';
 import { Loader } from '../components/Loader';
 import { useEffect, useState, useCallback } from 'react';
 import { Person } from '../types/Person';
 import { getPeople } from '../utils/fetchClient';
-import { ParentCell } from '../components/ParentCell';
+import { PersonLink } from '../components/ParentCell/PersonLink';
+
 // #endregion
 
 export const PeoplePage = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const { slug } = useParams();
-  const activePerson = people.find(person => person.slug === slug) || null;
 
   const showError = useCallback((message: string) => {
     setErrorMessage(message);
@@ -38,10 +34,6 @@ export const PeoplePage = () => {
 
     loadPeople();
   }, [showError]);
-
-  const getParentSlug = (parentName: string) => {
-    return people.find(p => p.name === parentName)?.slug || null;
-  };
 
   return (
     <>
@@ -78,39 +70,11 @@ export const PeoplePage = () => {
 
               <tbody>
                 {people.map(person => (
-                  <tr
-                    data-cy="person"
+                  <PersonLink
                     key={person.slug}
-                    className={cn({
-                      'has-background-warning':
-                        activePerson?.slug === person.slug,
-                    })}
-                  >
-                    <td>
-                      <Link
-                        to={`/people/${person.slug}`}
-                        className={cn({
-                          'has-text-danger': person.sex === 'f',
-                        })}
-                      >
-                        {person.name}
-                      </Link>
-                    </td>
-
-                    <td>{person.sex}</td>
-                    <td>{person.born}</td>
-                    <td>{person.died}</td>
-
-                    <ParentCell
-                      parentName={person.motherName!}
-                      getParentSlug={getParentSlug}
-                      isMother
-                    />
-                    <ParentCell
-                      parentName={person.fatherName!}
-                      getParentSlug={getParentSlug}
-                    />
-                  </tr>
+                    person={person}
+                    people={people}
+                  />
                 ))}
               </tbody>
             </table>
